@@ -1,0 +1,99 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User account information and career role",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "The unique user ID matching Firebase Auth UID"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "User email address"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User display name"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["Student", "Teacher", "Parent", "Counsellor", "Administrator"],
+          "description": "User role on the platform"
+        },
+        "school": {
+          "type": "string",
+          "description": "Name of the user's school or institution"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date and time the profile was created"
+        }
+      },
+      "required": ["uid", "email", "displayName", "role", "createdAt"]
+    },
+    "Assessment": {
+      "title": "Assessment Progress and Results",
+      "description": "A student's career aptitude test details, progress, answers, and AI results",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique assessment record ID"
+        },
+        "userId": {
+          "type": "string",
+          "description": "UID of the user who completed the test"
+        },
+        "gradeLevel": {
+          "type": "string",
+          "enum": ["Grade 9", "Grade 12", "Undergraduate"],
+          "description": "Educational tier of the assessment"
+        },
+        "progress": {
+          "type": "integer",
+          "description": "Percentage progress from 0 to 100"
+        },
+        "currentQuestionIndex": {
+          "type": "integer",
+          "description": "The index of the last answered question"
+        },
+        "answers": {
+          "type": "object",
+          "description": "Key-value map of question ID to selected answer value"
+        },
+        "scores": {
+          "type": "object",
+          "description": "Map of category scores calculated from answers"
+        },
+        "results": {
+          "type": "object",
+          "description": "AI-generated recommendations, matching scores, SWOT analysis, etc."
+        },
+        "completed": {
+          "type": "boolean",
+          "description": "True if the assessment is finished and scored"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last auto-save timestamp"
+        }
+      },
+      "required": ["id", "userId", "gradeLevel", "progress", "currentQuestionIndex", "answers", "completed", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Read-write user profile locked to owner UID"
+    },
+    "/assessments/{assessmentId}": {
+      "schema": "Assessment",
+      "description": "Read-write assessment session locked to creator UID"
+    }
+  }
+}

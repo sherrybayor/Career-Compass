@@ -1,0 +1,8 @@
+{
+  "name": "Career Compass",
+  "description": "An intelligent full-stack career guidance platform for Nigerian students mapping psychometrics with WAEC, JAMB, and university courses.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
